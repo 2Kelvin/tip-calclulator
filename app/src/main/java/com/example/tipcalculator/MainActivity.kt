@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
@@ -16,7 +17,11 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -56,12 +61,30 @@ fun TipLayout() {
                 .padding(bottom = 16.dp, top = 40.dp)
                 .align(alignment = Alignment.Start)
         )
+        TheInputField(
+            modifier = Modifier
+                .padding(bottom = 32.dp)
+                .fillMaxWidth()
+        )
         Text(
             text = stringResource(R.string.tip_amount, "$0.00"),
             style = MaterialTheme.typography.displaySmall
         )
         Spacer(modifier = Modifier.height(150.dp))
     }
+}
+
+@Composable
+fun TheInputField(modifier: Modifier = Modifier) {
+    // cash amount state variable
+    val amountInput = "0"
+    
+    // user text input field
+    TextField(
+        value = amountInput,
+        onValueChange = {},
+        modifier = Modifier
+    )
 }
 
 /**
