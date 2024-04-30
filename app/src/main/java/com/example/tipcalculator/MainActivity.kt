@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,10 +54,16 @@ class MainActivity : ComponentActivity() {
 fun TipLayout() {
     // cash amount state variable
     var cashAmountInput by remember { mutableStateOf("") }
+    // tip amount state variable
+    var tipAmountInput by remember { mutableStateOf("") }
+
+    // converting tipAmount from string to double
+    val tipPercent = tipAmountInput.toDoubleOrNull() ?: 0.0
     // converting the user amount entered from a string to a double
     val cashAmount = cashAmountInput.toDoubleOrNull() ?: 0.0
-    // calculating the tip amount
-    val tip = calculateTip(cashAmount)
+
+    // calculating the tip amount, using the amount & custom tip percent if provided
+    val tip = calculateTip(cashAmount, tipPercent)
 
     Column(
         modifier = Modifier
@@ -71,9 +79,33 @@ fun TipLayout() {
                 .padding(bottom = 16.dp, top = 40.dp)
                 .align(alignment = Alignment.Start)
         )
+        // cash amount input field
         TheInputField(
             value = cashAmountInput,
             onValueChange = { cashAmountInput = it },
+            label = R.string.bill_amount,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                // configuring the phone keyboard to show only numbers
+                keyboardType = KeyboardType.Number,
+                // have a next phone keyboard button at the end of the keyboard (next action button)
+                // done action button closes the phone keyboard
+                imeAction = ImeAction.Next
+            ),
+            modifier = Modifier
+                .padding(bottom = 32.dp)
+                .fillMaxWidth()
+        )
+        // tip input field
+        TheInputField(
+            value = tipAmountInput,
+            onValueChange = { tipAmountInput = it },
+            label = R.string.how_was_the_service,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                // configuring the phone keyboard to show only numbers
+                keyboardType = KeyboardType.Number,
+                // have done phone keyboard button at the end of the keyboard (done action button)
+                imeAction = ImeAction.Done
+            ),
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
@@ -90,6 +122,8 @@ fun TipLayout() {
 fun TheInputField(
     value: String,
     onValueChange: (String) -> Unit,
+    @StringRes label: Int, // @StringRes annotates that this is a string resource reference
+    keyboardOptions: KeyboardOptions,
     modifier: Modifier = Modifier
 ) {
     // user text input field
@@ -105,10 +139,9 @@ fun TheInputField(
         // it assigns the new value to the state object value property
         onValueChange = onValueChange,
         singleLine = true,
-        label = { Text(text = stringResource(id = R.string.bill_amount)) },
+        label = { Text(text = stringResource(id = label)) },
         // make the input scrollable horizontally instead of spanning to anew line
-        // configuring the phone keyboard to show only numbers
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = keyboardOptions,
         modifier = modifier
     )
 }
