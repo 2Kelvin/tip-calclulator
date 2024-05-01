@@ -46,5 +46,5 @@ A jetpack compose app that calculates custom tips on different cash amounts
 - `kotlin.math.ceil` rounds a number up
 - `local testing` tests business logic's (kotlin) functions, classes, methods, variables...
 - make a function / class available for local testing by annotating it with `@VisibleForTesting`
-- `instrumental testing` tests ui code (jetpack compose & composable functions that translate to UI)
-- both local and instrumental testing have their different folder paths where you can add respective testing files
+- `instrumented testing` tests ui code (jetpack compose & composable functions that translate to UI)
+- both local and instrumented testing have their different folder paths where you can add respective testing files
