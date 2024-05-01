@@ -102,7 +102,6 @@ fun TipAppLayout() {
                 // configuring the phone keyboard to show only numbers
                 keyboardType = KeyboardType.Number,
                 // have a next phone keyboard button at the end of the keyboard (next action button)
-                // done action button closes the phone keyboard
                 imeAction = ImeAction.Next
             ),
             leadingIcon = R.drawable.money,
@@ -119,6 +118,7 @@ fun TipAppLayout() {
                 // configuring the phone keyboard to show only numbers
                 keyboardType = KeyboardType.Number,
                 // have done phone keyboard button at the end of the keyboard (done action button)
+                // done action button closes the phone keyboard
                 imeAction = ImeAction.Done
             ),
             leadingIcon = R.drawable.percent,
